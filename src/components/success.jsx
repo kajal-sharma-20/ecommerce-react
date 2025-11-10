@@ -1,4 +1,4 @@
-import { FaUserCircle, FaSearch, FaCrown, FaHeart, FaRegHeart } from "react-icons/fa";
+import { FaUserCircle,  FaCrown, FaHeart, FaRegHeart } from "react-icons/fa";
 import Modals from "./modals";
 import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
