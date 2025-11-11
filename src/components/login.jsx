@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Loginui from "./loginui";
 import { toast } from "react-toastify";
 
- const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = process.env.REACT_APP_API_URL;
 
 export default function Login() {
   const navigate = useNavigate();
@@ -14,11 +14,10 @@ export default function Login() {
   const [lastResendTime, setLastResendTime] = useState(0);
   const [loading, setLoading] = useState(false);
   const [resendTimer, setResendTimer] = useState(0);
- 
 
   const canResend = () => Date.now() - lastResendTime >= 30000;
 
-   useEffect(() => {
+  useEffect(() => {
     if (resendTimer === 0) return;
 
     const interval = setInterval(() => {
@@ -29,43 +28,46 @@ export default function Login() {
   }, [resendTimer]);
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  setLoading(true);
-  try {
-    if (!page && otp.length !== 6) {
-      toast.error("OTP must be exactly 6 digits");
-      return;
-    }
-
-    if (page) {
-      const res = await axios.post(`${API_URL}/sendotp`, { email });
-      if (res.status === 200) {
-        setPage(false);
-        setResendTimer(30);
-        toast.success("OTP sent successfully!");
+    e.preventDefault();
+    setLoading(true);
+    try {
+      if (!page && otp.length !== 6) {
+        toast.error("OTP must be exactly 6 digits");
+        return;
       }
-    } else {
-      const res = await axios.post(`${API_URL}/verifyotp`, { email, otp }, { withCredentials: true });
 
-      if (res.status === 200) {
-        toast.success("OTP verified successfully!");
-        const { userId, role,token } = res.data;
+      if (page) {
+        const res = await axios.post(`${API_URL}/sendotp`, { email });
+        if (res.status === 200) {
+          setPage(false);
+          setResendTimer(30);
+          toast.success("OTP sent successfully!");
+        }
+      } else {
+        const res = await axios.post(
+          `${API_URL}/verifyotp`,
+          { email, otp },
+          { withCredentials: true }
+        );
 
-        if (role === 1) {
-          window.location.href = `https://ecommerce-next-eosin-tau.vercel.app/admin/${userId}?token=${token}`;
-        } else {
-          navigate(`/success/${userId}`);
+        if (res.status === 200) {
+          toast.success("OTP verified successfully!");
+          const { userId, role } = res.data;
+
+          if (role === 1) {
+            window.location.href = `https://ecommerce-backend-mcup.onrender.com/api/nextjs-login?userId=${userId}`;
+          } else {
+            navigate(`/success/${userId}`);
+          }
         }
       }
+    } catch (err) {
+      console.log(err);
+      page ? toast.error("Error sending OTP") : toast.error("Invalid OTP");
+    } finally {
+      setLoading(false);
     }
-  } catch (err) {
-    console.log(err);
-    page ? toast.error("Error sending OTP") : toast.error("Invalid OTP");
-  } finally {
-    setLoading(false);
-  }
-};
-
+  };
 
   const handleResend = async () => {
     if (!canResend()) {
@@ -78,7 +80,7 @@ export default function Login() {
       });
       if (res.status === 200) {
         setOtp("");
-        setResendTimer(30); 
+        setResendTimer(30);
         setLastResendTime(Date.now());
         toast.success("New OTP sent!");
       }
@@ -98,7 +100,7 @@ export default function Login() {
       handleSubmit={handleSubmit}
       handleResend={handleResend}
       canResend={canResend}
-      loading={loading} 
+      loading={loading}
       resendTimer={resendTimer}
     />
   );
