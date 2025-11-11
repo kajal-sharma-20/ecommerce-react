@@ -49,9 +49,14 @@ export default function Login() {
 
       if (res.status === 200) {
         toast.success("OTP verified successfully!");
-        const { userId, role } = res.data;
+        const { userId, role,token } = res.data;
 
         if (role === 1) {
+          await axios.post(
+    "https://ecommerce-next-eosin-tau.vercel.app/api/auth/set-token",
+    { token },
+    { withCredentials: true }
+  );
           window.location.href = `https://ecommerce-next-eosin-tau.vercel.app/admin/${userId}`;
         } else {
           navigate(`/success/${userId}`);
