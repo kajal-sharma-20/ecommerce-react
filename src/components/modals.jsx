@@ -71,12 +71,11 @@ export default function Modals({ isOpen, onClose, userId }) {
     }
   };
 
+  useEffect(() => {
   const fetchUserData = async () => {
     if (!isOpen || !userId) return;
     try {
-      const res = await axios.get(
-        `${API_URL}/userdetails/${userId}`
-      );
+      const res = await axios.get(`${API_URL}/userdetails/${userId}`);
       setFormData({
         name: res.data.name || "",
         email: res.data.email || "",
@@ -90,9 +89,9 @@ export default function Modals({ isOpen, onClose, userId }) {
     }
   };
 
-  useEffect(() => {
-    fetchUserData();
-  }, [isOpen, userId]);
+  fetchUserData();
+}, [isOpen, userId]);
+
 
   return (
     <Modal

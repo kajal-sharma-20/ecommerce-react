@@ -18,21 +18,22 @@ export default function Plans() {
   const [selectedSubscription, setSelectedSubscription] = useState(null);
   const navigate=useNavigate()
 
-  useEffect(() => {
-    fetchPlans();
-  }, []);
-
   const fetchPlans = useCallback(async () => {
-    try {
-      const res = await axios.get(`${API_URL}/getplans/${userId}`);
-      setPlans(res.data.plans);
-    } catch (err) {
-      console.error(err);
-      toast.error("Failed to fetch plans");
-    } finally {
-      setLoading(false);
-    }
-  }, [userId]);
+  try {
+    const res = await axios.get(`${API_URL}/getplans/${userId}`);
+    setPlans(res.data.plans);
+  } catch (err) {
+    console.error(err);
+    toast.error("Failed to fetch plans");
+  } finally {
+    setLoading(false);
+  }
+}, [userId]);
+
+useEffect(() => {
+  fetchPlans();
+}, [fetchPlans]);
+
 
   const handleSubscribe = async (priceId) => {
     try {
