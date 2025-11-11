@@ -57,7 +57,7 @@ export default function Modals({ isOpen, onClose, userId }) {
         else if (key !== "preview") data.append(key, formData[key]);
       });
 
-      const res = await axios.put(
+      await axios.put(
         `${API_URL}/updateuser/${userId}`,
         data,
         { headers: { "Content-Type": "multipart/form-data" } }

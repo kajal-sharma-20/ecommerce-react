@@ -15,9 +15,6 @@ export default function UserOrders() {
   const navigate=useNavigate()
 
   useEffect(() => {
-    fetchOrders();
-  }, [userId]);
-
   const fetchOrders = async () => {
     try {
       setLoading(true);
@@ -30,6 +27,9 @@ export default function UserOrders() {
       setLoading(false);
     }
   };
+
+  fetchOrders();
+}, [userId]);
 
   const handleCancelOrder = async (orderId) => {
     try {

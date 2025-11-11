@@ -26,10 +26,6 @@ export default function Createorder() {
   const [summary, setSummary] = useState(null);
 
   useEffect(() => {
-    dispatch(fetchCartItems(userid));
-    fetchSummary();
-  }, [dispatch, userid]);
-
   const fetchSummary = async () => {
     try {
       const res = await axios.get(`${API_URL}/getordersummary/${userid}`);
@@ -38,6 +34,10 @@ export default function Createorder() {
       console.error("Error fetching summary:", err);
     }
   };
+
+  dispatch(fetchCartItems(userid));
+  fetchSummary();
+}, [dispatch, userid]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -22,7 +22,7 @@ export default function Plans() {
     fetchPlans();
   }, []);
 
-  const fetchPlans = async () => {
+  const fetchPlans = useCallback(async () => {
     try {
       const res = await axios.get(`${API_URL}/getplans/${userId}`);
       setPlans(res.data.plans);
@@ -32,7 +32,7 @@ export default function Plans() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [userId]);
 
   const handleSubscribe = async (priceId) => {
     try {

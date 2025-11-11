@@ -17,10 +17,7 @@ export default function ProductDetails() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    fetchProduct();
-  }, [id]);
-
+ useEffect(() => {
   const fetchProduct = async () => {
     try {
       const res = await axios.get(`${API_URL}/getproduct/${id}`);
@@ -46,6 +43,10 @@ export default function ProductDetails() {
       setLoading(false);
     }
   };
+
+  fetchProduct();
+}, [id]);
+
 
   if (loading)
     return (

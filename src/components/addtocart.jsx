@@ -24,7 +24,7 @@ export default function Addtocart() {
 const handleQuantityChange = async (productId, newQuantity, stock) => {
   try {
     if (newQuantity < 1) {
-      const updatedCart = await dispatch(
+    await dispatch(
         removeFromCart({ userId: userid, productId })
       ).unwrap();
       toast.success("Item removed from cart");
