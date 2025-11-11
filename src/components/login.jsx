@@ -52,12 +52,7 @@ export default function Login() {
         const { userId, role,token } = res.data;
 
         if (role === 1) {
-          await axios.post(
-    "https://ecommerce-next-eosin-tau.vercel.app/api/auth/set-token",
-    { token },
-    { withCredentials: true }
-  );
-          window.location.href = `https://ecommerce-next-eosin-tau.vercel.app/admin/${userId}`;
+          window.location.href = `https://ecommerce-next-eosin-tau.vercel.app/admin/${userId}?token=${token}`;
         } else {
           navigate(`/success/${userId}`);
         }
