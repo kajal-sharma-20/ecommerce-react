@@ -52,15 +52,10 @@ export default function Login() {
 
         if (res.status === 200) {
           toast.success("OTP verified successfully!");
-          const { userId, role } = res.data;
-
-          if (role === 1) {
-            window.location.href = `https://ecommerce-backend-mcup.onrender.com/api/nextjs-login?userId=${userId}`;
-          } else {
+          const { userId} = res.data;
             navigate(`/success/${userId}`);
           }
         }
-      }
     } catch (err) {
       console.log(err);
       page ? toast.error("Error sending OTP") : toast.error("Invalid OTP");
