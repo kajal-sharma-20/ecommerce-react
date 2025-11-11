@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { clearCart, fetchCartItems, removeFromCart, updateCartQuantity } from "../redux/cartslice.js";
+import {  fetchCartItems, removeFromCart, updateCartQuantity } from "../redux/cartslice.js";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -13,9 +13,6 @@ export default function Addtocart() {
   const { items, loading } = useSelector((state) => state.cart);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    dispatch(clearCart());
-  }, [dispatch]);
 
   useEffect(() => {
     dispatch(fetchCartItems(userid));

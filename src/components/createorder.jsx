@@ -60,10 +60,10 @@ export default function Createorder() {
       if (payment_method === "CARD") {  
         window.location.href = res.data.sessionUrl;
       } else {
-         dispatch(clearCart());
         toast.success("Order placed successfully (Cash on Delivery)");
         navigate("/ordersuccess");
       }
+      dispatch(clearCart());
     } catch (err) {
       console.error(err);
       toast.error(err.response?.data?.message || "Failed to create order");
