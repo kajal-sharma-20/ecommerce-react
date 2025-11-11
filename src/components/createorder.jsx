@@ -58,12 +58,15 @@ export default function Createorder() {
       });
 
       if (payment_method === "CARD") {  
-        window.location.href = res.data.sessionUrl;
+       setTimeout(() => {
+    dispatch(clearCart());
+    window.location.href = res.data.sessionUrl;
+  }, 100);
       } else {
         toast.success("Order placed successfully (Cash on Delivery)");
+        dispatch(clearCart());
         navigate("/ordersuccess");
       }
-      dispatch(clearCart());
     } catch (err) {
       console.error(err);
       toast.error(err.response?.data?.message || "Failed to create order");
