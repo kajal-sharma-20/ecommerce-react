@@ -52,7 +52,7 @@ export default function Login() {
         const { userId, role } = res.data;
 
         if (role === 1) {
-          window.location.href = `http://localhost:3000/admin/${userId}`;
+          window.location.href = `https://ecommerce-next-eosin-tau.vercel.app/admin/${userId}`;
         } else {
           navigate(`/success/${userId}`);
         }
