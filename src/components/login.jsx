@@ -53,7 +53,8 @@ export default function Login() {
 
         if (res.status === 200) {
           toast.success("OTP verified successfully!");
-          const { userId} = res.data;
+          const { userId, token} = res.data;
+          localStorage.setItem("token", token);
             navigate(`/success/${userId}`);
           }
         }

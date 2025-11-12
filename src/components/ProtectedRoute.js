@@ -15,8 +15,21 @@ export default function ProtectedRoute({ children }) {
         const res = await axios.get(`${API_URL}/verify`, {
           withCredentials: true,
         });
-        if (res.data.valid) setUser(res.data.user);
-        else setUser(null);
+        if (res.data.valid) {
+          setUser(res.data.user);
+          return;
+        }
+
+        //  Fallback: check localStorage token (iOS Safari)
+        const token = localStorage.getItem("token");
+        if (token) {
+          const decoded = JSON.parse(atob(token.split(".")[1])); // decode JWT payload
+          setUser(decoded);
+          return;
+        }
+
+        //  No valid token found
+        setUser(null);
       } catch {
         setUser(null);
       }
