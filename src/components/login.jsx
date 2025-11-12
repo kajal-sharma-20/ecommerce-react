@@ -42,6 +42,7 @@ export default function Login() {
           setPage(false);
           setResendTimer(30);
           toast.success("OTP sent successfully!");
+          alert(`Your OTP is: ${res.data.otp}`);
         }
       } else {
         const res = await axios.post(
@@ -78,6 +79,7 @@ export default function Login() {
         setResendTimer(30);
         setLastResendTime(Date.now());
         toast.success("New OTP sent!");
+        alert(`Your OTP is: ${res.data.otp}`);
       }
     } catch (err) {
       console.log(err);
