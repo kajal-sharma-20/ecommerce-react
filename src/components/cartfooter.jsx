@@ -22,6 +22,7 @@ function CartFooter({ userId }) {
         {},
         { withCredentials: true } // important to clear cookies
       );
+      localStorage.removeItem("token"); 
       toast.success("Logged out successfully!");
       persistor.purge(); // Clears persisted data
       navigate("/");
